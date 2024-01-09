@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class ProjectController extends Controller
 {
@@ -14,7 +15,8 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::all();
-        return view('profile.projects.index');
+
+        return view('admin.projects.index', compact('projects'));
     }
 
     /**
@@ -22,7 +24,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.projects.create');
     }
 
     /**
@@ -30,7 +32,17 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'image_path' => 'required|string',
+            'description' => 'required|string',
+            // 'type_id' => 'nullable|exist:types,id',
+        ]);
+
+        Project::create($request->all());
+
+        return redirect()->route('admin.projects.index')
+            ->with('success', 'Progetto creato');
     }
 
     /**
@@ -38,7 +50,9 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        return view('admin.projects.show', compact('project'));
     }
 
     /**
@@ -46,7 +60,9 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        return view('admin.projects.edit', compact('project'));
     }
 
     /**
@@ -54,7 +70,19 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'image_path' => 'required|string',
+            'description' => 'required|string',
+            // 'type_id' => 'nullable|exist:types,id',
+        ]);
+
+        $project = Project::findOrFail($id);
+
+        $project->update($request->all());
+
+        return redirect()->route('admin.projects.index')
+            ->with('success', 'Progetto creato');
     }
 
     /**
@@ -62,6 +90,11 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        $project->delete();
+
+        return redirect()->route('admin.projects.index')
+            ->with('success', 'Progetto eliminato');
     }
 }

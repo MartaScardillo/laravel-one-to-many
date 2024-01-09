@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Project;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -19,17 +20,13 @@ class ProjectSeeder extends Seeder
             'Progetto 2',
             'Progetto 3',
             'Progetto 4',
-            'Progetto 5',
-            'Progetto 6',
-            'Progetto 7',
-            'Progetto 8',
-            'Progetto 9',
-            'Progetto 10',
         ];
 
         foreach ( $projectsNames as $name ) {
-            Project::factory()->create([
+            Project::create([
                 'name' => $name,
+                'image_path' => fake()->imageUrl,
+                'description' => fake()->realText
             ]);
         }
     }

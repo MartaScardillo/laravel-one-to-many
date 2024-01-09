@@ -11,6 +11,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <p>
+                    Tipo progetto: {{ $project->type->name }}
+                    <br>
                     Nome progetto: {{ $project->name }}
                     <br>
                     Image path: {{ $project->image_path }}

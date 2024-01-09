@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('type_id')->constrained();
             $table->string('name');
             $table->string('image_path');
             $table->text('description');
+            $table->timestamps();
         });
     }
 

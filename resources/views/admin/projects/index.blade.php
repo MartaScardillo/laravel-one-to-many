@@ -24,6 +24,7 @@
 
                     <thead>
                         <tr>
+                            <th>Type</th>
                             <th>Name</th>
                             <th>Image path</th>
                         </tr>
@@ -33,6 +34,7 @@
 
                         @foreach($projects as $project)
                             <tr>
+                                <td>{{ $project->type->name }}</td>
                                 <td>{{ $project->name }}</td>
                                 <td>{{ $project->image_path }}</td>
                                 <td>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use Symfony\Component\HttpKernel\Profiler\Profile;
+use App\Models\Type;
 
 class ProjectController extends Controller
 {
@@ -24,7 +25,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+        $types = Type::all();
+
+        return view('admin.projects.create', compact('types'));
     }
 
     /**
@@ -36,7 +39,7 @@ class ProjectController extends Controller
             'name' => 'required|string|max:255',
             'image_path' => 'required|string',
             'description' => 'required|string',
-            // 'type_id' => 'nullable|exist:types,id',
+            'type_id' => 'required',
         ]);
 
         Project::create($request->all());
@@ -61,8 +64,9 @@ class ProjectController extends Controller
     public function edit(string $id)
     {
         $project = Project::findOrFail($id);
+        $types = Type::all();
 
-        return view('admin.projects.edit', compact('project'));
+        return view('admin.projects.edit', compact('project', 'types'));
     }
 
     /**
@@ -74,7 +78,7 @@ class ProjectController extends Controller
             'name' => 'required|string|max:255',
             'image_path' => 'required|string',
             'description' => 'required|string',
-            // 'type_id' => 'nullable|exist:types,id',
+            'type_id' => 'required',
         ]);
 
         $project = Project::findOrFail($id);

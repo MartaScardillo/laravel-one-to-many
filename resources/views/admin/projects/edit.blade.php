@@ -21,6 +21,19 @@
                     @method('PATCH')
 
                     <div class="form-group">
+                        <label for="type_id">Type:</label>
+                        <select class="form-control" name="type_id" id="type_id">
+                            @foreach ( $types as $type )
+                                <option
+                                    value="{{ $type->id }}"
+                                    {{ $type->id === $project->type_id ? 'selected' : null }}
+                                >
+                                    {{ $type->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="name">Name:</label>
                         <input type="text" name="name" id="name" class="form-control" value="{{ $project->name }}" required>
                     </div>

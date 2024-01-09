@@ -20,6 +20,16 @@
                     @csrf
 
                     <div class="form-group">
+                        <label for="type_id">Type:</label>
+                        <select class="form-control" name="type_id" id="type_id">
+                            @foreach ( $types as $type )
+                                <option value="{{ $type->id }}">
+                                    {{ $type->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="name">Name:</label>
                         <input type="text" name="name" id="name" class="form-control" required>
                     </div>
